@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MarketWise — Stock Market Basics Research Report</title>
+<style>
+:root{--bg:#0B1220;--bg2:#101a30;--card:rgba(255,255,255,.05);--bd:rgba(255,255,255,.1);--tx:#E8EEFB;--mu:#9AA8C7;--b:#2563EB;--g:#10B981;--c:#22D3EE;--sh:0 20px 50px rgba(0,0,0,.45);--nav:rgba(11,18,32,.7)}
+:root[data-theme=light]{--bg:#F3F6FD;--bg2:#E6ECF9;--card:rgba(255,255,255,.75);--bd:rgba(37,99,235,.15);--tx:#0B1220;--mu:#4B5A78;--sh:0 18px 40px rgba(37,99,235,.15);--nav:rgba(243,246,253,.8)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:"Segoe UI",Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);line-height:1.7;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom,0)}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 85% 5%,rgba(37,99,235,.28),transparent),radial-gradient(500px 400px at 5% 40%,rgba(34,211,238,.12),transparent),radial-gradient(500px 400px at 90% 85%,rgba(16,185,129,.12),transparent)}
+a{color:inherit;text-decoration:none}
+.w{max-width:1120px;margin:auto;padding:0 20px}
+section{padding:84px 0}
+h1,h2,h3{line-height:1.2;letter-spacing:-.02em}
+h2{font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:12px}
+h3{font-size:1.15rem;margin-bottom:8px}
+p{color:var(--mu);margin-bottom:14px;max-width:72ch}
+.grad{background:linear-gradient(90deg,var(--c),var(--g));-webkit-background-clip:text;background-clip:text;color:transparent}
+.glass{background:var(--card);border:1px solid var(--bd);border-radius:22px;padding:26px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--sh);transition:transform .3s,border-color .3s}
+.glass:hover{transform:translateY(-5px);border-color:var(--c)}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.tag{display:inline-block;padding:4px 14px;border-radius:99px;background:rgba(34,211,238,.12);color:var(--c);font-size:.85rem;font-weight:600;margin-bottom:14px;border:1px solid rgba(34,211,238,.3)}
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:var(--nav);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--bd);padding-top:env(safe-area-inset-top,0)}
+.nv{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.3rem}
+.logo i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--b),var(--c));display:grid;place-items:center;box-shadow:0 0 18px rgba(34,211,238,.5)}
+.links{display:flex;gap:6px;align-items:center}
+.links a{padding:8px 13px;border-radius:10px;color:var(--mu);font-size:.93rem;font-weight:500;transition:.2s}
+.links a:hover,.links a.on{color:var(--tx);background:var(--card)}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+.ic{width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--bd);font-size:1.1rem}
+#burger{display:none}
+.btn{display:inline-block;padding:14px 26px;border-radius:14px;font-weight:600;transition:.25s}
+.p{background:linear-gradient(135deg,var(--b),#1d4ed8);color:#fff;box-shadow:0 10px 28px rgba(37,99,235,.5)}
+.p:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(37,99,235,.7)}
+.s{border:1px solid var(--bd);background:var(--card)}
+.s:hover{border-color:var(--g);transform:translateY(-3px)}
+/* hero */
+.hero{padding:70px 0 50px}
+.hg{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);margin-bottom:18px}
+.hero p{font-size:1.1rem}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+.chart{padding:18px}
+.chart svg{width:100%;height:auto;display:block}
+.ln{stroke-dasharray:1200;stroke-dashoffset:1200;animation:dr 3s .3s ease forwards}
+.ar{opacity:0;animation:fi 1.5s 2.2s forwards}
+.dot{animation:pl 2s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes dr{to{stroke-dashoffset:0}}@keyframes fi{to{opacity:1}}@keyframes pl{50%{transform:scale(1.8);opacity:.4}}
+.note{font-size:.8rem;text-align:center;margin:8px auto 0;color:var(--mu)}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.chip{padding:7px 14px;border-radius:99px;background:var(--card);border:1px solid var(--bd);font-size:.85rem;color:var(--mu)}
+/* mini cards */
+.mini .ico{font-size:1.6rem;margin-bottom:6px}
+.pr{border-left:4px solid var(--g)}.rk{border-left:4px solid #f87171}
+ul.cl{list-style:none;padding:0}ul.cl li{color:var(--mu);padding:5px 0 5px 24px;position:relative}
+ul.cl li:before{content:"✓";position:absolute;left:0;color:var(--g);font-weight:700}
+ul.rl li:before{content:"!";color:#f87171}
+/* tabs / flow */
+.tabs{display:inline-flex;gap:6px;padding:5px;border-radius:14px;background:var(--card);border:1px solid var(--bd);margin:10px 0 22px}
+.tabs button{padding:10px 20px;border-radius:10px;background:transparent;color:var(--mu);font-weight:600}
+.tabs button.on{background:linear-gradient(135deg,var(--b),var(--c));color:#fff}
+.flow{display:none;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;text-align:center}
+.flow.on{display:flex;animation:fi .5s forwards}
+.node{padding:16px 20px;border-radius:16px;background:var(--bg2);border:1px solid var(--bd);min-width:150px;font-weight:600;font-size:.95rem}
+.node small{display:block;color:var(--mu);font-weight:400;font-size:.78rem}
+.arr{font-size:.8rem;color:var(--c);font-weight:600;display:flex;flex-direction:column;align-items:center}
+.arr b{font-size:1.6rem;animation:mv 1.4s infinite}
+@keyframes mv{50%{transform:translateX(6px)}}
+.tw{overflow-x:auto;border-radius:18px;border:1px solid var(--bd);margin-top:24px}
+table{width:100%;border-collapse:collapse;min-width:560px;background:var(--card)}
+th,td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--bd);font-size:.93rem}
+th{background:linear-gradient(90deg,rgba(37,99,235,.35),rgba(34,211,238,.2));font-weight:700}
+td:first-child{font-weight:600}td{color:var(--mu)}td:first-child{color:var(--tx)}
+tr:last-child td{border:0}
+.sebi .glass b{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--b),var(--c));font-size:1.3rem;margin-bottom:10px}
+.facts{display:flex;gap:16px;flex-wrap:wrap;margin:18px 0}
+.facts div{flex:1 1 220px;padding:18px;border-radius:18px;background:linear-gradient(135deg,rgba(37,99,235,.25),rgba(16,185,129,.18));border:1px solid var(--bd)}
+.facts strong{display:block;font-size:1.5rem}
+.take .glass{text-align:center}
+.take .glass b{font-size:2.2rem;display:block}
+.refs a{display:flex;justify-content:space-between;gap:10px;margin-bottom:12px;padding:16px 22px;border-radius:16px;background:var(--card);border:1px solid var(--bd);transition:.25s;word-break:break-all}
+.refs a:hover{border-color:var(--c);transform:translateX(6px)}
+.refs span{color:var(--c);font-weight:600;white-space:nowrap}
+footer{border-top:1px solid var(--bd);padding:34px 0;text-align:center;font-size:.88rem;color:var(--mu)}
+footer p{margin:6px auto}
+#top{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--c));color:#fff;font-size:1.2rem;box-shadow:0 8px 24px rgba(37,99,235,.5);opacity:0;pointer-events:none;transition:.3s}
+#top.on{opacity:1;pointer-events:auto}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--c),var(--g));z-index:99}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+:focus-visible{outline:2px solid var(--c);outline-offset:3px}
+@media(max-width:860px){.hg{grid-template-columns:1fr}.links{position:absolute;top:calc(68px + env(safe-area-inset-top,0px));left:0;right:0;flex-direction:column;align-items:stretch;background:var(--bg2);padding:12px 20px;border-bottom:1px solid var(--bd);display:none}.links.open{display:flex}#burger{display:block}section{padding:60px 0}.arr b{transform:rotate(90deg)}@keyframes mv{50%{transform:rotate(90deg) translateX(6px)}}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ln{stroke-dashoffset:0}.ar,.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<nav><div class="w nv">
+<a href="#home" class="logo"><i>📈</i>MarketWise</a>
+<div class="links" id="links">
+<a href="#home">Home</a><a href="#what">Stock Market</a><a href="#markets">Primary vs Secondary</a><a href="#sebi">SEBI</a><a href="#take">Takeaways</a><a href="#refs">References</a>
+</div>
+<div style="display:flex;gap:8px"><button class="ic" id="theme" aria-label="Toggle light or dark theme">🌙</button><button class="ic" id="burger" aria-label="Open menu">☰</button></div>
+</div></nav>
+
+<header class="hero" id="home"><div class="w hg">
+<div>
+<span class="tag">Stock Market Basics — Research Report</span>
+<h1>Understand the Stock Market. <span class="grad">Understand the Economy.</span></h1>
+<p>A clear, student-friendly guide to how shares are issued and traded in India, and how SEBI keeps the system fair.</p>
+<div class="cta"><a class="btn p" href="#what">Start Reading</a><a class="btn s" href="#refs">Official Sources</a></div>
+<div class="chips" style="margin-top:26px"><span class="chip">NSE</span><span class="chip">BSE</span><span class="chip">SEBI</span><span class="chip">IPO</span></div>
+</div>
+<div class="glass chart">
+<svg viewBox="0 0 520 320" role="img" aria-label="Illustrative rising line chart">
+<defs>
+<linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22D3EE" stop-opacity=".45"/><stop offset="1" stop-color="#22D3EE" stop-opacity="0"/></linearGradient>
+<linearGradient id="l" x1="0" x2="1"><stop offset="0" stop-color="#2563EB"/><stop offset=".6" stop-color="#22D3EE"/><stop offset="1" stop-color="#10B981"/></linearGradient>
+<filter id="gl"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g stroke="currentColor" stroke-opacity=".1"><path d="M20 60H500M20 130H500M20 200H500M20 270H500"/></g>
+<g fill="#10B981" opacity=".85"><rect x="40" y="235" width="14" height="35" rx="3"/><rect x="110" y="215" width="14" height="55" rx="3"/><rect x="180" y="225" width="14" height="45" rx="3"/><rect x="250" y="190" width="14" height="80" rx="3"/><rect x="320" y="170" width="14" height="100" rx="3"/><rect x="390" y="150" width="14" height="120" rx="3"/><rect x="460" y="120" width="14" height="150" rx="3"/></g>
+<path class="ar" d="M20 230L70 200L120 215L170 160L220 175L270 120L320 135L370 85L420 100L480 40V280H20Z" fill="url(#a)"/>
+<path class="ln" d="M20 230L70 200L120 215L170 160L220 175L270 120L320 135L370 85L420 100L480 40" fill="none" stroke="url(#l)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#gl)"/>
+<circle class="dot ar" cx="480" cy="40" r="7" fill="#10B981"/>
+</svg>
+<p class="note">Illustration only. Not real market data.</p>
+</div>
+</div></header>
+
+<section id="what"><div class="w">
+<div class="rv"><span class="tag">Topic 1</span><h2>What Is the Stock Market?</h2>
+<p>The stock market is an organised marketplace where shares of listed companies are issued, bought and sold. A <b>share</b> is a small unit of ownership in a company. When you hold a share, you own a tiny part of that business and may earn from its growth or from dividends.</p>
+<p>Companies sell shares to raise money for expansion, new products or debt repayment. <b>Investors</b>, from individuals to mutual funds, supply that money in the hope of earning returns. In this way, savings are turned into productive investment, which is why the market is closely linked to the wider economy.</p>
+<p>In India, trading mainly happens on two exchanges. The <b>Bombay Stock Exchange (BSE)</b>, set up in 1875, is Asia's oldest exchange, and its benchmark index is the Sensex. The <b>National Stock Exchange (NSE)</b> started trading in 1994 with fully electronic trading, and its benchmark index is the Nifty 50. Investors place orders through registered brokers, and shares are held in demat accounts.</p></div>
+<div class="grid" style="margin-top:26px">
+<div class="glass mini pr rv"><div class="ico">🌱</div><h3>Benefits</h3><ul class="cl"><li>Potential long-term wealth creation</li><li>Ownership in leading companies</li><li>Dividends and easy buying or selling</li><li>Funds for business growth and jobs</li></ul></div>
+<div class="glass mini rk rv"><div class="ico">⚠️</div><h3>Risks</h3><ul class="cl rl"><li>Share prices can fall as well as rise</li><li>Capital can be lost, with no guaranteed return</li><li>Company, economic and global events affect prices</li><li>Poor research or panic selling hurts results</li></ul></div>
+</div></div></section>
+
+<section id="markets" style="background:linear-gradient(var(--bg2),transparent)"><div class="w">
+<div class="rv"><span class="tag">Topic 2</span><h2>Primary vs Secondary Market</h2>
+<p>The two markets work together. One creates new securities and the other lets investors trade them afterwards.</p></div>
+<div class="grid">
+<div class="glass rv"><h3 class="grad">🏦 Primary Market</h3><p>Here a company issues shares for the first time, or issues more, directly to investors. It receives the money. Methods include an Initial Public Offering (IPO), Follow-on Public Offer (FPO) and rights issue. Examples: the LIC IPO in 2022 and the Zomato IPO in 2021.</p></div>
+<div class="glass rv"><h3 class="grad">🔄 Secondary Market</h3><p>Here existing shares are traded between investors on NSE and BSE. The company does not receive the money, but the market gives liquidity and fair price discovery. Examples: buying Reliance Industries, TCS or Infosys shares through a broker.</p></div>
+</div>
+<div class="tw rv"><table><thead><tr><th>Feature</th><th>Primary Market</th><th>Secondary Market</th></tr></thead><tbody>
+<tr><td>Who sells</td><td>The company itself</td><td>Other investors</td></tr>
+<tr><td>Who gets the money</td><td>The company</td><td>The selling investor</td></tr>
+<tr><td>Purpose</td><td>Raise fresh capital</td><td>Liquidity and trading</td></tr>
+<tr><td>Price</td><td>Fixed price or price band</td><td>Changes with demand and supply</td></tr>
+<tr><td>Where</td><td>Public issue, listed later on NSE/BSE</td><td>NSE and BSE</td></tr>
+<tr><td>Example</td><td>LIC IPO (2022)</td><td>Trading in TCS shares</td></tr></tbody></table></div>
+<div class="glass rv" style="margin-top:24px"><h3>How the money flows</h3>
+<div class="tabs" role="tablist"><button class="on" data-f="f1">Primary</button><button data-f="f2">Secondary</button></div>
+<div class="flow on" id="f1"><div class="node">Investor<small>e.g. applies in an IPO</small></div><div class="arr"><b>→</b>money</div><div class="node">Company<small>e.g. LIC of India</small></div><div class="arr"><b>→</b>shares</div><div class="node">Investor<small>holds new shares</small></div></div>
+<div class="flow" id="f2"><div class="node">Buyer<small>e.g. via a broker</small></div><div class="arr"><b>→</b>money</div><div class="node">NSE / BSE<small>matches orders</small></div><div class="arr"><b>→</b>money</div><div class="node">Seller<small>e.g. sells TCS shares</small></div></div>
+</div></div></section>
+
+<section id="sebi" class="sebi"><div class="w">
+<div class="rv"><span class="tag">Topic 3</span><h2>Role of SEBI in India</h2>
+<p>The Securities and Exchange Board of India (SEBI) is the regulator of India's securities market. It was <b>established in 1988</b> and was given <b>statutory status under the SEBI Act, 1992</b>, which gave it legal powers to protect investors and regulate the market.</p></div>
+<div class="grid">
+<div class="glass rv"><b>🛡️</b><h3>Investor Protection</h3><p>Sets rules to guard small investors from fraud and unfair practices, and runs investor education and grievance redressal such as SCORES.</p></div>
+<div class="glass rv"><b>⚖️</b><h3>Market Regulation</h3><p>Regulates stock exchanges, IPOs, mutual funds and listed companies to keep trading orderly.</p></div>
+<div class="glass rv"><b>🔍</b><h3>Transparency</h3><p>Requires listed companies to disclose financial results and key events, so investors can decide with facts.</p></div>
+<div class="glass rv"><b>🤝</b><h3>Intermediaries</h3><p>Registers and supervises brokers, depositories, merchant bankers and mutual funds.</p></div>
+<div class="glass rv"><b>🚫</b><h3>Insider Trading</h3><p>Prohibits trading on unpublished price-sensitive information and can penalise offenders under its insider trading regulations.</p></div>
+</div></div></section>
+
+<section id="take"><div class="w take">
+<h2 class="rv">Key Takeaways</h2>
+<div class="grid">
+<div class="glass rv"><b>🏢</b><h3>Shares mean ownership</h3><p>Companies raise capital and investors share in growth, with risk.</p></div>
+<div class="glass rv"><b>🔁</b><h3>Two markets, one system</h3><p>The primary market issues shares; the secondary market trades them.</p></div>
+<div class="glass rv"><b>🛡️</b><h3>SEBI keeps it fair</h3><p>Regulation builds trust, transparency and investor safety.</p></div>
+</div>
+<div class="glass rv" style="margin-top:26px"><h3>Conclusion</h3>
+<p>The stock market connects people who have savings with companies that need capital. The primary market creates new shares, while the secondary market gives investors a place to trade them with liquidity. NSE and BSE provide the platforms, and SEBI, strengthened by the SEBI Act, 1992, protects investors and supports transparency. A basic understanding of these ideas helps students see how markets support economic growth, and why careful research and awareness of risk are essential before investing.</p></div>
+</div></section>
+
+<section id="refs"><div class="w refs">
+<h2 class="rv">Official References</h2><p>Always verify information from the official sources below.</p>
+<a href="https://www.sebi.gov.in/" target="_blank" rel="noopener">SEBI — Securities and Exchange Board of India <span>sebi.gov.in ↗</span></a>
+<a href="https://www.nseindia.com/" target="_blank" rel="noopener">NSE — National Stock Exchange of India <span>nseindia.com ↗</span></a>
+<a href="https://www.bseindia.com/" target="_blank" rel="noopener">BSE — Bombay Stock Exchange <span>bseindia.com ↗</span></a>
+</div></section>
+
+<footer><div class="w"><div class="logo" style="justify-content:center"><i>📈</i>MarketWise</div>
+<p><b>Educational disclaimer:</b> This website is a college assignment made for learning only. It is not investment advice, and it shows no real or live stock prices. Investing in securities involves risk. Consult a SEBI-registered advisor before investing.</p>
+<p>© 2026 MarketWise. Stock Market Basics — Research Report.</p></div></footer>
+<button id="top" aria-label="Back to top">↑</button>
+
+<script>
+const R=document.documentElement,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+let t="dark";try{t=localStorage.getItem("mw")||t}catch(e){}
+const ap=v=>{R.dataset.theme=v;$("#theme").textContent=v=="dark"?"🌙":"☀️"};ap(t);
+$("#theme").onclick=()=>{t=t=="dark"?"light":"dark";ap(t);try{localStorage.setItem("mw",t)}catch(e){}};
+$("#burger").onclick=()=>$("#links").classList.toggle("open");
+$$("#links a").forEach(a=>a.onclick=()=>$("#links").classList.remove("open"));
+$$(".tabs button").forEach(b=>b.onclick=()=>{$$(".tabs button").forEach(x=>x.classList.remove("on"));$$(".flow").forEach(x=>x.classList.remove("on"));b.classList.add("on");$("#"+b.dataset.f).classList.add("on")});
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});
+$$(".rv").forEach(e=>io.observe(e));
+const secs=$$("section,header"),ls=$$("#links a");
+addEventListener("scroll",()=>{const y=scrollY,h=document.body.scrollHeight-innerHeight;$("#bar").style.width=(y/h*100)+"%";$("#top").classList.toggle("on",y>600);let c="home";secs.forEach(s=>{if(s.offsetTop-120<=y)c=s.id});ls.forEach(a=>a.classList.toggle("on",a.getAttribute("href")=="#"+c))},{passive:true});
+$("#top").onclick=()=>scrollTo({top:0,behavior:"smooth"});
+</script>
+</body>
+</html>
